@@ -1,20 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SubjectController!{% endblock %}
+{% block title %}Sujets{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/SAMAJESTEE/Downloads/my_stuff/symfony/chat/mini_chat/src/Controller/SubjectController.php'|file_link(0) }}">src/Controller/SubjectController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/SAMAJESTEE/Downloads/my_stuff/symfony/chat/mini_chat/templates/subject/index.html.twig'|file_link(0) }}">templates/subject/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% if subjects is empty %}
+    <h1>Hey, {{ app.user.username }}.</h1>
+        <p>C'est plutôt calme dans le coin. Pourquoi ne posterais-tu pas le premier sujet?</p>
+        <a href="{{ path('new_subject') }}" class="btn btn-lg btn-light fw-bold border-white bg-white">
+            Je me lance!
+        </a>
+    {% else %}
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-3">Derniers sujets</h6>
+            {% for subject in subjects %}
+            <div class="d-flex text-body-secondary mb-3">
+                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <strong class="d-block text-gray-dark">Posté par <a class="href="{{ path('show_user_profile', { 'username': subject.id_user.username }) }}" class="text-white"">{{ subject.id_user.username }}</a></strong>
+                    {{ subject.text|slice(0, 100) ~ '...' }}
+                </p>
+            </div>
+            <small class="d-block text-end mt-3">
+                <strong class="d-block text-gray-dark">Créé le</strong> {{ subject.created_at }}
+            </small>
+            {% if subject.created_at != subject.updated_at %}
+            <small class="d-block text-end mt-3">
+                <strong class="d-block text-gray-dark">Mis à jour</strong> le {{ subject.updated_at }}
+            </small>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <ul>
+                <li>{{ subject.name }}</li>
+        </ul>
+    {% endif %}
 {% endblock %}

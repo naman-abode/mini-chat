@@ -2,17 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Subject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
 
 class SubjectController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $doctrine) {}
+
     #[Route('/subject', name: 'show_subjects', methods: ['GET'])]
     public function readAll(): Response
     {
+        $subjectRepository = $this->doctrine->getRepository(Subject::class);
+        $subjects = $subjectRepository->findAll();
+
         return $this->render('subject/index.html.twig', [
-            'controller_name' => 'SubjectController',
+            'subjects' => $subjects,
         ]);
     }
     #[Route('/subject/new', name: 'new_subject', methods: ['GET', 'POST'])]

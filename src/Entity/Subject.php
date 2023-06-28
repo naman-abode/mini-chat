@@ -6,6 +6,7 @@ use App\Repository\SubjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
 class Subject
 {
@@ -21,10 +22,10 @@ class Subject
     private ?string $text = null;
 
     #[ORM\Column]
-    private ?int $views_count = null;
+    private int $views_count = 0;
 
     #[ORM\Column]
-    private ?bool $is_archived = null;
+    private bool $is_archived = false;
 
     #[ORM\ManyToOne(inversedBy: 'subjects')]
     #[ORM\JoinColumn(nullable: false)]

@@ -19,8 +19,6 @@ class UserType extends AbstractType
             ->add('genre')
             ->add('birth_date')
             ->add('email')
-            ->add('created_at')
-            ->add('updated_at')
         ;
     }
 

@@ -1,0 +1,9 @@
+<div>
+  <h3 class="float-md-start mb-0">Mini-Chat</h3>
+  <nav class="nav nav-masthead justify-content-center float-md-end">
+    <a class="nav-link fw-bold py-1 px-0{{ app.request.attributes.get('_route') == 'show_subjects' ? ' active' }}" href="{{ path('show_subjects') }}">Accueil</a>
+    <a class="nav-link fw-bold py-1 px-0{{ app.request.attributes.get('_route') == 'show_user_profile' ? ' active' }}" href="{{ path('show_user_profile', {'username': app.user.username}) }}">Profil</a>
+    <a class="nav-link fw-bold py-1 px-0{{ app.request.attributes.get('_route') == 'new_subject' ? ' active' }}" href="{{ path('new_subject') }}">Nouveau sujet</a>
+    <a class="nav-link fw-bold py-1 px-0{{ app.request.attributes.get('_route') == 'app_logout' ? ' active' }}" href="{{ path('app_logout') }}">Déconnexion</a>
+  </nav>
+</div>

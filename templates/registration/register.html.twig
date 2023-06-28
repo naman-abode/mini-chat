@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<form class="form-style w-100 m-auto" method="post">
+    <h1 class="text-center">Inscription</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        <div class="form-floating text-dark">
+            {{ form_widget(registrationForm.username, {
+                'attr': {'class': 'form-control', 'placeholder': 'Identifiant', 'type': 'text', 'autofocus': '', required: ''},
+                'label_attr': {'for': 'floatingUsername'}
+            }) }}
+            {{ form_label(registrationForm.username, 'Identifiant', {
+                'label_attr': {'class': 'form-label'}
+            }) }}
+        </div>
+        <div class="form-floating text-dark">
+            {{ form_widget(registrationForm.plainPassword, {
+                'attr': {'class': 'form-control', 'placeholder': 'Mot de passe', 'type': 'password', required: ''},
+                'label_attr': {'for': 'floatingPassword'}
+            }) }}
+            {{ form_label(registrationForm.plainPassword, 'Mot de passe', {
+                'label_attr': {'class': 'form-label'}
+            }) }}
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('register-user') }}">
+
+        <button type="submit" class="btn btn-lg btn-light fw-bold border-white bg-white">C'est parti !</button>
+    {{ form_end(registrationForm) }}
+</form>
+
+{% endblock content %}

@@ -7,11 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User implements UserInterface
+#[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: ['username'], message: 'Un compte possède déjà cet identifiant.')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,16 +31,19 @@ class User implements UserInterface
     #[ORM\Column(length: 100, unique: true)]
     private ?string $username = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
+    private array $roles = [];
+
+    #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\Column(length: 1)]
-    private ?string $genre = null;
+    private string $genre = '-';
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birth_date = null;
 
-    #[ORM\Column(length: 128, unique: true)]
+    #[ORM\Column(length: 128, nullable: true)]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -110,6 +117,12 @@ class User implements UserInterface
         return $this;
     }
 
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
     public function getGenre(): ?string
     {
         return $this->genre;
@@ -170,6 +183,19 @@ class User implements UserInterface
         return $this;
     }
 
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->setUpdatedAt(new \DateTimeImmutable());
+    }
+
     /**
      * @return Collection<int, Comment>
      */
@@ -191,7 +217,6 @@ class User implements UserInterface
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
             if ($comment->getIdUser() === $this) {
                 $comment->setIdUser(null);
             }
@@ -230,19 +255,26 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getRoles(): array
     {
-        // Define the roles or permissions for the user, if needed
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     public function getUserIdentifier(): string
     {
         return '';
-    }
-
-    public function eraseCredentials(): void
-    {
-        // Implement if any sensitive data needs to be cleared
     }
 }

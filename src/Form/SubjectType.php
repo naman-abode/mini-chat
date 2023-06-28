@@ -15,10 +15,6 @@ class SubjectType extends AbstractType
             ->add('title')
             ->add('text')
             ->add('views_count')
-            ->add('is_archived')
-            ->add('created_at')
-            ->add('updated_at')
-            ->add('id_user')
         ;
     }
 
