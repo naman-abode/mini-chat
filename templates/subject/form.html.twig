@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau sujet{% endblock title %}
+
+{% block content %}
+    <div class="card">
+      <div class="card-body">
+          <h5 class="card-title">{{ app.request.attributes.get('_route') == 'new_subject' ? 'Nouveau' : 'Modifier un'}} sujet</h5>
+          {{ form_errors(subjectForm) }}
+
+          {{ form_start(subjectForm) }}
+
+          <div class="form-floating text-secondary mb-3">
+            {{ form_widget(subjectForm.title, {
+              'attr': {
+                'class': 'form-control',
+                'placeholder': 'Titre du sujet',
+                'type': 'text',
+                'required': ''
+              }
+            }) }}
+            {{ form_label(subjectForm.title, 'Titre du sujet', {
+              'label_attr': {'class': 'form-label'}
+            }) }}
+          </div>
+
+          <div class="form-floating text-secondary mb-3">
+            {{ form_widget(subjectForm.text, {
+              'attr': {
+                'class': 'form-control',
+                'placeholder': 'Corps du sujet',
+                'type': 'text',
+                'style': 'height: 200px;',
+                'required': ''
+              }
+            }) }}
+            {{ form_label(subjectForm.text, 'Corps du sujet', {
+              'label_attr': {'class': 'form-label'}
+            }) }}
+          </div>
+
+          <button type="submit" class="btn btn-lg btn-secondary fw-bold border-secondary bg-secondary">Publier</button>
+
+          {{ form_end(subjectForm) }}
+      </div>
+    </div>
+{% endblock content %}

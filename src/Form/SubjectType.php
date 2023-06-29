@@ -14,7 +14,6 @@ class SubjectType extends AbstractType
         $builder
             ->add('title')
             ->add('text')
-            ->add('views_count')
         ;
     }
 

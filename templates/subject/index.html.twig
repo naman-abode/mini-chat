@@ -5,33 +5,39 @@
 {% block content %}
 
     {% if subjects is empty %}
-    <h1>Hey, {{ app.user.username }}.</h1>
+    <h1>Salut, {{ app.user.username }}.</h1>
         <p>C'est plutôt calme dans le coin. Pourquoi ne posterais-tu pas le premier sujet?</p>
         <a href="{{ path('new_subject') }}" class="btn btn-lg btn-light fw-bold border-white bg-white">
             Je me lance!
         </a>
     {% else %}
-        <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <div class="my-3 p-3 bg-body rounded shadow-sm text-secondary">
             <h6 class="border-bottom pb-2 mb-3">Derniers sujets</h6>
             {% for subject in subjects %}
-            <div class="d-flex text-body-secondary mb-3">
+            <div class="d-flex text-start mb-3">
                 <p class="pb-3 mb-0 small lh-sm border-bottom">
-                    <strong class="d-block text-gray-dark">Posté par <a class="href="{{ path('show_user_profile', { 'username': subject.id_user.username }) }}" class="text-white"">{{ subject.id_user.username }}</a></strong>
-                    {{ subject.text|slice(0, 100) ~ '...' }}
+                    {% if subject.user.username == app.user.username %}
+                    <a class="link-underline link-underline-opacity-0" href="{{ path('edit_subject', {'id': subject.id }) }}" title="Modifier">✎</a>
+                    <a class="link-underline link-underline-opacity-0" href="{{ path('delete_subject', {'id': subject.id }) }}" title="Supprimer">❌</a>
+                    {% endif %}
+                    <strong class="d-block text-gray-dark">
+                        Posté par 
+                        <a class="text-dark"
+                        href="{{ path('show_user_profile', { 'username': subject.user.username }) }}">
+                        {{ subject.user.username }}</a>: {{ subject.title|slice(0, 50) }}
+                    </strong>
+                    {{ subject.text|slice(0, 75) ~ '...' }}
                 </p>
             </div>
             <small class="d-block text-end mt-3">
-                <strong class="d-block text-gray-dark">Créé le</strong> {{ subject.created_at }}
+                <strong class="d-block text-gray-dark">
+                    Créé le {{ subject.getCreatedAt|date('d-M-Y') }}
+                    {% if subject.getCreatedAt != subject.getUpdatedAt %}
+                    , modifié le {{ subject.getUpdatedAt|date('d-M-Y') }}
+                    {% endif %}
+                </strong>
             </small>
-            {% if subject.created_at != subject.updated_at %}
-            <small class="d-block text-end mt-3">
-                <strong class="d-block text-gray-dark">Mis à jour</strong> le {{ subject.updated_at }}
-            </small>
-            {% endif %}
             {% endfor %}
         </div>
-        <ul>
-                <li>{{ subject.name }}</li>
-        </ul>
     {% endif %}
 {% endblock %}

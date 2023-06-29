@@ -9,18 +9,24 @@
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        <div class="form-floating text-dark">
+        <div class="form-floating text-secondary">
             {{ form_widget(registrationForm.username, {
-                'attr': {'class': 'form-control', 'placeholder': 'Identifiant', 'type': 'text', 'autofocus': '', required: ''},
+                'attr': {'class': 'form-control', 'placeholder': 'Identifiant', 'type': 'text', 'autofocus': '', 'required': ''},
                 'label_attr': {'for': 'floatingUsername'}
             }) }}
             {{ form_label(registrationForm.username, 'Identifiant', {
                 'label_attr': {'class': 'form-label'}
             }) }}
         </div>
-        <div class="form-floating text-dark">
+        
+        <div class="form-floating text-secondary">
             {{ form_widget(registrationForm.plainPassword, {
-                'attr': {'class': 'form-control', 'placeholder': 'Mot de passe', 'type': 'password', required: ''},
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Mot de passe',
+                    'type': 'password',
+                    'required': ''
+                },
                 'label_attr': {'for': 'floatingPassword'}
             }) }}
             {{ form_label(registrationForm.plainPassword, 'Mot de passe', {
