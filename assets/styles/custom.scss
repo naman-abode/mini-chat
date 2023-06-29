@@ -69,3 +69,63 @@
 .bd-mode-toggle {
   z-index: 1500;
 }
+
+.btn-light,
+.btn-light:hover,
+.btn-light:focus {
+  color: #333;
+  text-shadow: none;
+}
+
+body {
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+.cover-container-lg {
+  max-width: 84em;
+}
+
+.nav-masthead .nav-link {
+  color: rgba(255, 255, 255, .5);
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+.form-style {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-style .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-style input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-style input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

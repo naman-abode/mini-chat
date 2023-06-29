@@ -58,10 +58,10 @@ class SubjectController extends AbstractController
         }
     
         return $this->render('subject/index.html.twig', [
-            'subjects' => $subject,
+            'subjects' => [$subject],
         ]);
     }
-    #[Route('/subject/{id}/edit', name: 'edit_subject', methods: ['GET', 'POST'])]
+    #[Route('/subject/{id}/edit', name: 'edit_subject', methods: ['GET', 'POST', 'PUT'])]
     public function update(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $subject = $entityManager->getRepository(Subject::class)->find($id);

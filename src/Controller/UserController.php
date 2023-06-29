@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,11 +39,16 @@ class UserController extends AbstractController
         ]);
     }
     #[Route('/user/{username}', name: 'show_user_profile', methods: ['GET'])]
-    public function read(string $username): Response
+    public function read(string $username, EntityManagerInterface $entityManager): Response
     {
-        
+        $user = $entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+    
+        if (is_null($user)) {
+            throw $this->createNotFoundException('Cet utilisateur n\'existe pas.');
+        }
+    
         return $this->render('user/profile.html.twig', [
-            'controller_name' => 'UserController',
+            'user' => $user,
         ]);
     }
     #[Route('/user/{username}/edit', name: 'edit_user_profile', methods: ['GET', 'PUT'])]

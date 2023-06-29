@@ -19,13 +19,17 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $id_user = null;
+    private ?User $user = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Subject $subject = null;
 
     public function getId(): ?int
     {
@@ -44,14 +48,14 @@ class Comment
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function setIdUser(?User $id_user): static
+    public function setUser(?User $user): static
     {
-        $this->id_user = $id_user;
+        $this->user = $user;
 
         return $this;
     }
@@ -76,6 +80,18 @@ class Comment
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getSubject(): ?Subject
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(?Subject $subject): static
+    {
+        $this->subject = $subject;
 
         return $this;
     }

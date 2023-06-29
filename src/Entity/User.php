@@ -208,7 +208,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setIdUser($this);
+            $comment->setUser($this);
         }
 
         return $this;
@@ -217,8 +217,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
-            if ($comment->getIdUser() === $this) {
-                $comment->setIdUser(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
@@ -237,7 +237,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->subjects->contains($subject)) {
             $this->subjects->add($subject);
-            $subject->setIdUser($this);
+            $subject->setUser($this);
         }
 
         return $this;
@@ -247,8 +247,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->subjects->removeElement($subject)) {
             // set the owning side to null (unless already changed)
-            if ($subject->getIdUser() === $this) {
-                $subject->setIdUser(null);
+            if ($subject->getUser() === $this) {
+                $subject->setUser(null);
             }
         }
 

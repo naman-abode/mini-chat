@@ -1,20 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CommentController!{% endblock %}
+{% block title %}Commentaires{% endblock title %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/SAMAJESTEE/Downloads/my_stuff/symfony/chat/mini_chat/src/Controller/CommentController.php'|file_link(0) }}">src/Controller/CommentController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/SAMAJESTEE/Downloads/my_stuff/symfony/chat/mini_chat/templates/comment/index.html.twig'|file_link(0) }}">templates/comment/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+{% block content %}
+  <div class="d-flex justify-content-center">
+    <div class="card w-75">
+      <h5 class="card-header">{{ subject.title }}</h5>
+      <div class="card-body">
+          <p class="card-text">{{ subject.text }}</p>
+      </div>
+      <div class="card-footer row">
+        <div class="col-4">
+          Posté par {{ subject.user.username }}
+        </div>
+        <div class="col-4">
+          <span>Créé le {{ subject.getCreatedAt|date('d-M-Y') }}</span>
+        </div>
+        <div class="col-4">
+        {% if subject.createdAt != subject.updatedAt %}
+          <span>Modifié le {{ subject.getUpdatedAt|date('d-M-Y') }}</span>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-4">
+        <h5>Comments</h5>
+        
+        {% if comments|length > 0 %}
+            {% for comment in comments %}
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Soyez la première personne à répondre!</p>
+        {% endif %}
+    </div>
+  </div>
+{% endblock content %}

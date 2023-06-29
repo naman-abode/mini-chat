@@ -22,19 +22,17 @@
                     {% endif %}
                     <strong class="d-block text-gray-dark">
                         Posté par 
-                        <a class="text-dark"
-                        href="{{ path('show_user_profile', { 'username': subject.user.username }) }}">
-                        {{ subject.user.username }}</a>: {{ subject.title|slice(0, 50) }}
+                        <a class="text-dark" href="{{ path('show_user_profile', { 'username': subject.user.username }) }}">
+                        {{ subject.user.username }}</a>:
+                        <a class="link-underline link-underline-opacity-0" href="{{ path('show_comments', { 'id': subject.id }) }}">
+                        {{ subject.title|slice(0, 100) }}</a>
                     </strong>
-                    {{ subject.text|slice(0, 75) ~ '...' }}
+                    {{ subject.text|slice(0, 150) ~ '...' }}
                 </p>
             </div>
             <small class="d-block text-end mt-3">
-                <strong class="d-block text-gray-dark">
-                    Créé le {{ subject.getCreatedAt|date('d-M-Y') }}
-                    {% if subject.getCreatedAt != subject.getUpdatedAt %}
-                    , modifié le {{ subject.getUpdatedAt|date('d-M-Y') }}
-                    {% endif %}
+                <strong class="d-block">
+                    Créé le {{ subject.getCreatedAt|date('d-M-Y') }}{% if subject.getCreatedAt != subject.getUpdatedAt %}, modifié le {{ subject.getUpdatedAt|date('d-M-Y') }}{% endif %}
                 </strong>
             </small>
             {% endfor %}

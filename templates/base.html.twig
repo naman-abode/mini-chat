@@ -3,72 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mini-Chat · {% block title %}Accueil{% endblock title %}</title>
+    <title>Mini-Chat · {% block title %}Template{% endblock title %}</title>
       <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
       {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
       {% endblock stylesheets %}
-      <style>
-        .btn-light,
-        .btn-light:hover,
-        .btn-light:focus {
-          color: #333;
-          text-shadow: none;
-        }
-
-        body {
-          text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-          box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-        }
-
-        .cover-container {
-          max-width: 42em;
-        }
-
-        .nav-masthead .nav-link {
-          color: rgba(255, 255, 255, .5);
-          border-bottom: .25rem solid transparent;
-        }
-
-        .nav-masthead .nav-link:hover,
-        .nav-masthead .nav-link:focus {
-          border-bottom-color: rgba(255, 255, 255, .25);
-        }
-
-        .nav-masthead .nav-link + .nav-link {
-          margin-left: 1rem;
-        }
-
-        .nav-masthead .active {
-          color: #fff;
-          border-bottom-color: #fff;
-        }
-
-        .form-style {
-          max-width: 330px;
-          padding: 1rem;
-        }
-        
-        .form-style .form-floating:focus-within {
-          z-index: 2;
-        }
-        
-        .form-style input[type="text"] {
-          margin-bottom: -1px;
-          border-bottom-right-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-        
-        .form-style input[type="password"] {
-          margin-bottom: 10px;
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-        }
-      </style>
+      {% block javascripts %}
+      {{ encore_entry_script_tags('app') }}
+    {% endblock javascripts %}
   </head>
 
   <body class="d-flex h-100 text-center text-bg-dark">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div class="{{ app.user ? 'cover-container-lg' : 'cover-container' }} d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="mb-auto">
       {% if app.user %}
         {% include 'partials/_navbar_auth.html.twig' %}
@@ -78,17 +24,10 @@
       </header>
       <main class="px-3">
         {% block content %}
-        <h1>Bienvenue</h1>
-        <p class="lead">Ceci est une petite application créée sur la base d'une template <a href="https://getbootstrap.com/docs/5.3/examples/cover/" class="text-white">Bootstrap</a>. Commencez par vous créer un compte puis amusez-vous!</p>
         {% endblock content %}
       </main>
-      <footer class="mt-auto text-white-50">
-        {% block footer %}<a href="https://github.com/naman-abode" class="text-white">Naman's</a> · 2023{% endblock footer %}
-      </footer>
+      {% include 'partials/_footer.html.twig' %}
     </div>
-    {% block javascripts %}
-      {{ encore_entry_script_tags('app') }}
-    {% endblock javascripts %}
   </body>
 </html>
 

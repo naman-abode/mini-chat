@@ -1,2 +1,42 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Profil{% endblock title %}
+
+{% block content %}
+  <div class="d-flex justify-content-center">
+    <div class="card w-50">
+      <h1 class="card-header h4">Profil de {{ user.username }}</h1>
+      <div class="card-body text-start">
+            <div class="row mb-3">
+                <div class="col-4 fw-bold">Nom:</div>
+                <p class="col-8">
+                  {{ user.lastName }}
+                </p>
+            </div>
+            <div class="row mb-3">
+                <div class="col-4 fw-bold">Prénom:</div>
+                <p class="col-8">
+                  {{ user.firstName }}
+                </p>
+            </div>
+            <div class="row mb-3">
+                <div class="col-4 fw-bold">Genre:</div>
+                <p class="col-8">
+                  {{ user.genre }}
+                </p>
+            </div>
+            <div class="row mb-3">
+                <div class="col-4 fw-bold">Inscrit(e) le:</div>
+                <p class="col-8">
+                  {{ user.createdAt|date('d-M-Y') }}
+                </p>
+            </div>
+          </div>
+      {% if app.user.username == user.username %}
+        <div class="card-footer">
+          <a href="{{ path('edit_user_profile', { 'username': app.user.username }) }}" class="btn btn-lg btn-secondary fw-bold border-secondary bg-secondary">Modifier</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
